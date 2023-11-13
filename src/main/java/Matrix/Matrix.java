@@ -6,7 +6,7 @@ import java.util.Arrays;
 public class Matrix {
     private final int rowsCount;
     private final int colsCount;
-    private double[][] array;
+    public double[][] array;
     private static final Scanner in = new Scanner(System.in);
 
     public Matrix() {
@@ -90,6 +90,7 @@ public class Matrix {
             System.out.print("| ");
 
             for (double el : line) {
+                el = (el != -0.0d) ? el : 0.0d;
                 System.out.printf("%.5f", el);
                 System.out.print(" ".repeat(maxLength - lengthNum(el)) + " | ");
             }
@@ -313,10 +314,10 @@ public class Matrix {
         }
     }
 
-    public double determinant() {
-        double det = 0;
+    public Double determinant() {
 
         if (this.rowsCount == this.colsCount) {
+            double det = 0.0d;
             int[][] perm = permutation(this.colsCount);
 
             for (int i = 0; i < perm.length; i++) {
@@ -327,11 +328,12 @@ public class Matrix {
                 det += temp;
             }
 
+            return det;
+
         } else {
             System.out.println("* Матрица не является квадратной");
+            return null;
         }
-
-        return det;
     }
 
     private Matrix extendedMatrix() {
@@ -415,5 +417,69 @@ public class Matrix {
             result *= i;
         }
         return result;
+    }
+
+    public Matrix pow() {
+        if (this.rowsCount == this.colsCount) {
+            System.out.print("""
+                    >>> Введите степень, в которую нужно возвести матрицу:
+                    -->\s""");
+            return pow(in.nextInt());
+        } else {
+            System.out.println("* Матрица не является квадратной");
+            return null;
+        }
+    }
+
+    private Matrix pow(int degree) {
+        Matrix exponentiatedMatrix = new Matrix(this.rowsCount, this.colsCount, this.array);
+
+        for (int i = 0; i < degree - 1; i++) {
+            exponentiatedMatrix = multiply(exponentiatedMatrix, this);
+        }
+
+        return exponentiatedMatrix;
+    }
+
+    public Matrix inverse() {
+        Matrix inverseMatrix = new Matrix(this.rowsCount, this.colsCount);
+
+        double det = determinant();
+
+        if (det != 0) {
+            for (int i = 0; i < this.rowsCount; i++) {
+                for (int j = 0; j < this.colsCount; j++) {
+                    inverseMatrix.array[i][j] = (1 / det) * Math.pow(-1, i + j) * minor(i, j);
+                }
+            }
+            return inverseMatrix.transposeMatrix();
+        } else {
+            System.out.println("Обратную матрицу невозможно найти" +
+                    ", так как определитель равен нулю");
+            return null;
+        }
+    }
+
+    private Double minor(int row, int col) {
+        Matrix matrix = new Matrix(this.rowsCount - 1, this.colsCount - 1);
+
+        for (int i = 0; i < this.rowsCount; i++) {
+            for (int j = 0; j < this.colsCount; j++) {
+                if (i < row) {
+                    if (j < col) {
+                        matrix.array[i][j] = this.array[i][j];
+                    } else if (j > col) {
+                        matrix.array[i][j - 1] = this.array[i][j];
+                    }
+                } else if (i > row) {
+                    if (j < col) {
+                        matrix.array[i - 1][j] = this.array[i][j];
+                    } else if(j > col) {
+                        matrix.array[i - 1][j - 1] = this.array[i][j];
+                    }
+                }
+            }
+        }
+        return matrix.determinant();
     }
 }

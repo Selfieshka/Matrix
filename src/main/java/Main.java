@@ -3,11 +3,13 @@ import Matrix.*;
 public class Main {
 
     public static void main(String[] args) {
-        setMatrixTest();
-        multiplyTest();
-        rangTest();
-        transposeTest();
-        solveTest();
+//        setMatrixTest();
+//        multiplyTest();
+//        rangTest();
+//        transposeTest();
+//        solveTest();
+//        powTest();
+        inverseTest();
     }
 
     public static void setMatrixTest() {
@@ -40,17 +42,22 @@ public class Main {
     }
 
     public static void rangTest() {
-        Matrix matrixA = new Matrix(5, 5, new double[][]{
-                {1, 0, 0, 1, 4},
-                {0, 1, 0, 2, 5},
-                {0, 0, 1, 3, 6},
-                {1, 2, 3, 14, 32},
-                {4, 5, 6, 32, 77}
+        Matrix matrixA = new Matrix(4, 4, new double[][]{
+                {21, 40, -13, -48},
+                {19, -18, 20, 38},
+                {-65, 65 ,-65 ,65},
+                {-38, 36, -40, -76}
         });
 
+        Matrix matrixB = new Matrix(3, 4, new double[][]{
+                {1, 3, 3, 4},
+                {0, 0, 1, 2},
+                {2, 6, 1, -2}
+        });
         matrixA.printMatrix();
 
         System.out.printf("Ранг матрицы: %d\n", matrixA.rangMatrix());
+        System.out.printf("Ранг матрицы: %d\n", matrixB.rangMatrix());
     }
 
     public static void transposeTest() {
@@ -87,5 +94,25 @@ public class Main {
         } catch (NullPointerException e) {
 
         }
+    }
+
+    public static void powTest() {
+        Matrix matrixA = new Matrix(3, 3, new double[][]{
+                {1, 2, 3},
+                {4, 5, 6},
+                {7, 8, 9}
+        });
+
+        matrixA.pow().printMatrix();
+    }
+
+    public static void inverseTest() {
+        Matrix matrixA = new Matrix(3, 3, new double[][]{
+                {2, 3, -1},
+                {0, 1, 1},
+                {1, -1, 2}
+        });
+
+        matrixA.inverse().printMatrix();
     }
 }
