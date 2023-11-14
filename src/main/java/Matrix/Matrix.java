@@ -6,7 +6,7 @@ import java.util.Arrays;
 public class Matrix {
     private final int rowsCount;
     private final int colsCount;
-    public double[][] array;
+    private double[][] array;
     private static final Scanner in = new Scanner(System.in);
 
     public Matrix() {
@@ -314,7 +314,7 @@ public class Matrix {
         }
     }
 
-    public Double determinant() {
+    private Double determinant() {
 
         if (this.rowsCount == this.colsCount) {
             double det = 0.0d;
