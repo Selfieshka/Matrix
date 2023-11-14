@@ -7,9 +7,9 @@ public class Main {
 //        multiplyTest();
 //        rangTest();
 //        transposeTest();
-//        solveTest();
+        solveTest();
 //        powTest();
-        inverseTest();
+//        inverseTest();
     }
 
     public static void setMatrixTest() {
@@ -72,18 +72,20 @@ public class Main {
     }
 
     public static void solveTest() {
-        Matrix matrixA = new Matrix(4, 4, new double[][]{
-                {1, 2, 3, -2},
-                {2, -1, -2, -3},
-                {3, 2, -1, 2},
-                {2, -3, 2, 1}
+        Matrix matrixA = new Matrix(5, 5, new double[][]{
+                {1, 2, 1, 2, 2},
+                {3, 3, 2, -1, 2},
+                {9, 10, 5, -1,-2},
+                {1, 2, -1, -1, 2},
+                {8, 9 , 4, 0, 2}
         });
 
-        Matrix matrixB = new Matrix(4, 1, new double[][]{
-                {6},
-                {8},
-                {4},
-                {-8}
+        Matrix matrixB = new Matrix(5, 1, new double[][]{
+                {3},
+                {0},
+                {0},
+                {-3},
+                {-3}
         });
 
         matrixA.printMatrix();

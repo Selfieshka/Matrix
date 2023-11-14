@@ -178,9 +178,7 @@ public class Matrix {
     }
 
     public int rangMatrix() {
-        Matrix rangMatrix = gaussianMethod();
-
-        return nonZeroLinesCount(rangMatrix.array);
+        return nonZeroLinesCount(gaussianMethod().array);
     }
 
     // Метод Гаусса в два хода + приведение к единицам на главной диагонали
@@ -207,28 +205,20 @@ public class Matrix {
             }
         }
 
-        // Обратный ход
+        // Обратный ход + единицы на главной диагонали
         for (int i = tempMatrix.rowsCount - 1; i > 0; i--) {
             // В обратном ходе не будем заменять "нулевую" строку
-            if (tempMatrix.array[i][i] == 0) {
-                continue;
-            }
-
-            for (int j = i - 1; j >= 0; j--) {
-                double k = -(tempMatrix.array[j][i] / tempMatrix.array[i][i]);
-                for (int m = tempMatrix.colsCount - 1; m >= 0; m--) {
-                    tempMatrix.array[j][m] += tempMatrix.array[i][m] * k;
-                }
-            }
-        }
-
-        // Получаем единицы на главной диагонали
-        for (int i = 0; i < tempMatrix.rowsCount; i++) {
             if (tempMatrix.array[i][i] != 0) {
-                double k = 1 / tempMatrix.array[i][i];
-                for (int j = 0; j < tempMatrix.colsCount; j++) {
-                    tempMatrix.array[i][j] *= k;
+                for (int j = i - 1; j >= 0; j--) {
+                    double k1 = -(tempMatrix.array[j][i] / tempMatrix.array[i][i]);
+                    double k2 = 1 / tempMatrix.array[i][i];
+                    for (int m = tempMatrix.colsCount - 1; m >= 0; m--) {
+                        tempMatrix.array[j][m] += tempMatrix.array[i][m] * k1;
+                        tempMatrix.array[i][m] *= k2;
+                    }
+
                 }
+
             }
         }
 
