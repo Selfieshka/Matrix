@@ -1,4 +1,4 @@
-package Matrix;
+package matrix;
 
 import java.util.Scanner;
 import java.util.Arrays;
@@ -183,7 +183,7 @@ public class Matrix {
 
     // Метод Гаусса в два хода + приведение к единицам на главной диагонали
     private Matrix gaussianMethod() {
-        Matrix tempMatrix = new Matrix(this.rowsCount, this.colsCount, this.array);
+        Matrix tempMatrix = new Matrix(this.rowsCount, this.colsCount, deepCopy(this.array));
 
         // Прямой ход
         for (int i = 0; i < tempMatrix.rowsCount - 1; i++) {
@@ -206,7 +206,7 @@ public class Matrix {
         }
 
         // Обратный ход + единицы на главной диагонали
-        for (int i = tempMatrix.rowsCount - 1; i > 0; i--) {
+        for (int i = tempMatrix.rowsCount - 1; i >= 0; i--) {
             // В обратном ходе не будем заменять "нулевую" строку
             if (tempMatrix.array[i][i] != 0) {
                 for (int j = i - 1; j >= 0; j--) {
@@ -246,6 +246,17 @@ public class Matrix {
         return countLines;
     }
 
+    private double[][] deepCopy(double[][] array) {
+        double[][] newArray = new double[this.rowsCount][this.colsCount];
+
+        for (int i = 0; i < this.rowsCount; i++) {
+            for (int j = 0; j < this.colsCount; j++) {
+                newArray[i][j] = this.array[i][j];
+            }
+        }
+
+        return newArray;
+    }
     // Смена "нулевой" строки
     private void swapLines(int lineNum) {
         double[] tempLine = this.array[lineNum];

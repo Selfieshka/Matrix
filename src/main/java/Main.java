@@ -1,4 +1,4 @@
-import Matrix.*;
+import matrix.*;
 
 public class Main {
 
@@ -99,10 +99,9 @@ public class Main {
     }
 
     public static void powTest() {
-        Matrix matrixA = new Matrix(3, 3, new double[][]{
-                {1, 2, 3},
-                {4, 5, 6},
-                {7, 8, 9}
+        Matrix matrixA = new Matrix(2, 2, new double[][]{
+                {-1, 0},
+                {1, -1}
         });
 
         matrixA.pow().printMatrix();
